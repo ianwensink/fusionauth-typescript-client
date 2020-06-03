@@ -3429,13 +3429,16 @@ export interface AuthenticationTokenConfiguration extends Enableable {
  * @author Trevor Smith
  */
 export interface Authenticator {
+  connectTimeout?: number;
   data?: Record<string, any>;
   headers?: HTTPHeaders;
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
   id?: UUID;
   insertInstant?: number;
+  lambdaConfiguration?: LambdaConfiguration;
   name?: string;
+  readTimeout?: number;
   sslCertificateKeysId?: UUID;
   type?: AuthenticatorType;
   uri?: string;
@@ -3447,16 +3450,9 @@ export interface Authenticator {
 export interface AuthenticatorPolicy {
   authenticatorId?: UUID;
   data?: Record<string, any>;
-  migrateIdentity?: boolean;
-  run?: AuthenticatorPolicyTrigger;
+  executionTrigger?: ExecutionTrigger;
+  migrationStrategy?: MigrationStrategy;
   sequence?: number;
-}
-
-/**
- * @author Trevor Smith
- */
-export enum AuthenticatorPolicyTrigger {
-  always
 }
 
 /**
@@ -4015,6 +4011,13 @@ export enum EventType {
   UserEmailVerified = "user.email.verified",
   UserPasswordBreach = "user.password.breach",
   Test = "test"
+}
+
+/**
+ * @author Trevor Smith
+ */
+export enum ExecutionTrigger {
+  always
 }
 
 /**
@@ -4689,6 +4692,10 @@ export interface LambdaConfiguration {
   reconcileId?: UUID;
 }
 
+export interface LambdaConfiguration {
+  reconcileId?: UUID;
+}
+
 /**
  * Lambda API request object.
  *
@@ -4717,7 +4724,8 @@ export enum LambdaType {
   JWTPopulate,
   OpenIDReconcile,
   SAMLv2Reconcile,
-  SAMLv2Populate
+  SAMLv2Populate,
+  LdapReconcile
 }
 
 /**
@@ -4903,6 +4911,15 @@ export interface MemberResponse {
 export interface MetaData {
   device?: DeviceInfo;
   scopes?: Array<string>;
+}
+
+/**
+ * @author Trevor Smith
+ */
+export enum MigrationStrategy {
+  createShellUser,
+  synchronizeUser,
+  migrateIdentity
 }
 
 /**
@@ -5768,6 +5785,7 @@ export interface UIConfiguration {
  */
 export interface User extends SecureIdentity {
   active?: boolean;
+  authenticatorId?: UUID;
   birthDate?: string;
   cleanSpeakId?: UUID;
   data?: Record<string, any>;
