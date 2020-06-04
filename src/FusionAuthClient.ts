@@ -3439,7 +3439,7 @@ export interface Authenticator {
   lambdaConfiguration?: LambdaConfiguration;
   name?: string;
   readTimeout?: number;
-  sslCertificateKeysId?: UUID;
+  sslCertificateKeyId?: UUID;
   type?: AuthenticatorType;
   uri?: string;
 }
