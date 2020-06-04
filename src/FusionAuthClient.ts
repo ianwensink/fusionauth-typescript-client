@@ -19,7 +19,7 @@ import DefaultRESTClientBuilder from "./DefaultRESTClientBuilder";
 import IRESTClientBuilder from "./IRESTClientBuilder";
 import ClientResponse from "./ClientResponse";
 import {RequestCredentials} from "node-fetch";
-import * as FormData from "form-data";
+import {URLSearchParams} from "url";
 
 export class FusionAuthClient {
   public clientBuilder: IRESTClientBuilder = new DefaultRESTClientBuilder();
@@ -820,7 +820,8 @@ export class FusionAuthClient {
    * @returns {Promise<ClientResponse<AccessToken>>}
    */
   exchangeOAuthCodeForAccessToken(code: string, client_id: string, client_secret: string, redirect_uri: string): Promise<ClientResponse<AccessToken>> {
-    let body = new FormData();
+    let body = new URLSearchParams();
+
     body.append('code', code);
     body.append('client_id', client_id);
     body.append('client_secret', client_secret);
@@ -845,7 +846,8 @@ export class FusionAuthClient {
    * @returns {Promise<ClientResponse<AccessToken>>}
    */
   exchangeRefreshTokenForAccessToken(refresh_token: string, client_id: string, client_secret: string, scope: string, user_code: string): Promise<ClientResponse<AccessToken>> {
-    let body = new FormData();
+    let body = new URLSearchParams();
+
     body.append('refresh_token', refresh_token);
     body.append('client_id', client_id);
     body.append('client_secret', client_secret);
@@ -886,7 +888,8 @@ export class FusionAuthClient {
    * @returns {Promise<ClientResponse<AccessToken>>}
    */
   exchangeUserCredentialsForAccessToken(username: string, password: string, client_id: string, client_secret: string, scope: string, user_code: string): Promise<ClientResponse<AccessToken>> {
-    let body = new FormData();
+    let body = new URLSearchParams();
+
     body.append('username', username);
     body.append('password', password);
     body.append('client_id', client_id);
@@ -3264,6 +3267,28 @@ export enum Algorithm {
 }
 
 /**
+ * @author Daniel DeGroff
+ */
+export interface AppleApplicationConfiguration extends BaseIdentityProviderApplicationConfiguration {
+  buttonText?: string;
+  keyId?: UUID;
+  scope?: string;
+  servicesId?: string;
+  teamId?: string;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface AppleIdentityProvider extends BaseIdentityProvider<AppleApplicationConfiguration> {
+  buttonText?: string;
+  keyId?: UUID;
+  scope?: string;
+  servicesId?: string;
+  teamId?: string;
+}
+
+/**
  * @author Seth Musselman
  */
 export interface Application {
@@ -3507,6 +3532,7 @@ export interface BaseIdentityProvider<D extends BaseIdentityProviderApplicationC
   data?: Record<string, any>;
   debug?: boolean;
   id?: UUID;
+  lambdaConfiguration?: LambdaConfiguration;
   name?: string;
   type?: IdentityProviderType;
 }
@@ -3689,6 +3715,9 @@ export enum ContentStatus {
   REJECTED
 }
 
+/**
+ * @author Trevor Smith
+ */
 export interface CORSConfiguration extends Enableable {
   allowCredentials?: boolean;
   allowedHeaders?: Array<string>;
@@ -4346,7 +4375,9 @@ export interface HYPRIdentityProvider extends BaseIdentityProvider<HYPRApplicati
 }
 
 export interface IdentityProviderDetails {
+  applicationIds?: Array<UUID>;
   id?: UUID;
+  idpEndpoint?: string;
   name?: string;
   oauth2?: IdentityProviderOauth2Configuration;
   type?: IdentityProviderType;
@@ -4415,7 +4446,8 @@ export enum IdentityProviderType {
   Google,
   Twitter,
   SAMLv2,
-  HYPR
+  HYPR,
+  Apple
 }
 
 /**
@@ -4525,6 +4557,12 @@ export interface JSONWebKey {
 }
 
 /**
+ * Interface for any object that can provide JSON Web key Information.
+ */
+export interface JSONWebKeyInfoProvider {
+}
+
+/**
  * @author Daniel DeGroff
  */
 export interface JWKSResponse {
@@ -4561,7 +4599,10 @@ export interface JWT {
 export interface JWTConfiguration extends Enableable {
   accessTokenKeyId?: UUID;
   idTokenKeyId?: UUID;
+  refreshTokenExpirationPolicy?: RefreshTokenExpirationPolicy;
+  refreshTokenRevocationPolicy?: RefreshTokenRevocationPolicy;
   refreshTokenTimeToLiveInMinutes?: number;
+  refreshTokenUsagePolicy?: RefreshTokenUsagePolicy;
   timeToLiveInSeconds?: number;
 }
 
@@ -4619,13 +4660,13 @@ export interface Key {
   certificate?: string;
   certificateInformation?: CertificateInformation;
   expirationInstant?: number;
+  hasPrivateKey?: boolean;
   id?: UUID;
   insertInstant?: number;
   issuer?: string;
   kid?: string;
   length?: number;
   name?: string;
-  pair?: boolean;
   privateKey?: string;
   publicKey?: string;
   secret?: string;
@@ -4726,6 +4767,12 @@ export enum LambdaType {
   OpenIDReconcile,
   SAMLv2Reconcile,
   SAMLv2Populate,
+  AppleReconcile,
+  ExternalJWTReconcile,
+  FacebookReconcile,
+  GoogleReconcile,
+  HYPRReconcile,
+  TwitterReconcile,
   LdapReconcile
 }
 
@@ -5100,7 +5147,6 @@ export interface OpenIdConnectIdentityProvider extends BaseIdentityProvider<Open
   buttonImageURL?: string;
   buttonText?: string;
   domains?: Array<string>;
-  lambdaConfiguration?: LambdaConfiguration;
   oauth2?: IdentityProviderOauth2Configuration;
 }
 
@@ -5254,6 +5300,7 @@ export interface RefreshRequest {
  * @author Daniel DeGroff
  */
 export interface RefreshResponse {
+  refreshToken?: string;
   refreshTokens?: Array<RefreshToken>;
   token?: string;
 }
@@ -5270,6 +5317,30 @@ export interface RefreshToken {
   startInstant?: number;
   token?: string;
   userId?: UUID;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum RefreshTokenExpirationPolicy {
+  Fixed,
+  SlidingWindow
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface RefreshTokenRevocationPolicy {
+  onLoginPrevented?: boolean;
+  onPasswordChanged?: boolean;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum RefreshTokenUsagePolicy {
+  Reusable,
+  OneTimeUse
 }
 
 export interface RegistrationConfiguration extends Enableable {
@@ -5313,6 +5384,7 @@ export interface RegistrationRequest {
  * @author Brian Pontarelli
  */
 export interface RegistrationResponse {
+  refreshToken?: string;
   registration?: UserRegistration;
   token?: string;
   user?: User;
@@ -5340,6 +5412,14 @@ export interface RememberPreviousPasswords extends Enableable {
  */
 export interface Requirable extends Enableable {
   required?: boolean;
+}
+
+/**
+ * Interface describing the need for CORS configuration.
+ *
+ * @author Daniel DeGroff
+ */
+export interface RequiresCORSConfiguration {
 }
 
 /**
@@ -5373,7 +5453,6 @@ export interface SAMLv2IdentityProvider extends BaseIdentityProvider<SAMLv2Appli
   idpEndpoint?: string;
   issuer?: string;
   keyId?: UUID;
-  lambdaConfiguration?: LambdaConfiguration;
   useNameIdForEmail?: boolean;
 }
 
