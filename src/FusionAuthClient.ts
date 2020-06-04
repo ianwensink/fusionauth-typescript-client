@@ -3429,6 +3429,7 @@ export interface AuthenticationTokenConfiguration extends Enableable {
  * @author Trevor Smith
  */
 export interface Authenticator {
+  authenticationUri?: string;
   connectTimeout?: number;
   data?: Record<string, any>;
   headers?: HTTPHeaders;
@@ -3439,9 +3440,9 @@ export interface Authenticator {
   lambdaConfiguration?: LambdaConfiguration;
   name?: string;
   readTimeout?: number;
+  retrieveUserUri?: string;
   sslCertificateKeyId?: UUID;
   type?: AuthenticatorType;
-  uri?: string;
 }
 
 /**
