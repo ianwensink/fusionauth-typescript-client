@@ -3455,24 +3455,29 @@ export interface AuthenticationTokenConfiguration extends Enableable {
  */
 export interface Authenticator {
   authenticationUri?: string;
+  baseStructure?: string;
   connectTimeout?: number;
   data?: Record<string, any>;
+  debug?: boolean;
+  emailAttribute?: string;
   headers?: HTTPHeaders;
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
   id?: UUID;
+  identifyingAttribute?: string;
   insertInstant?: number;
   lambdaConfiguration?: LambdaConfiguration;
   name?: string;
   readTimeout?: number;
+  requestedAttributes?: Array<string>;
   retrieveUserUri?: string;
   sslCertificateKeyId?: UUID;
+  systemAccountDn?: string;
+  systemAccountPassword?: string;
   type?: AuthenticatorType;
 }
 
-/**
- * @author Trevor Smith
- */
+// - Why does this implement _InternalJSONColumn, and why does this use @InternalJSONColumn?, does this have it's own table with a data column?
 export interface AuthenticatorPolicy {
   authenticatorId?: UUID;
   data?: Record<string, any>;
