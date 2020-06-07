@@ -3449,70 +3449,6 @@ export interface AuthenticationTokenConfiguration extends Enableable {
 }
 
 /**
- * Models an external authenticator.
- *
- * @author Trevor Smith
- */
-export interface Authenticator {
-  authenticationUri?: string;
-  baseStructure?: string;
-  connectTimeout?: number;
-  data?: Record<string, any>;
-  debug?: boolean;
-  emailAttribute?: string;
-  headers?: HTTPHeaders;
-  httpAuthenticationPassword?: string;
-  httpAuthenticationUsername?: string;
-  id?: UUID;
-  identifyingAttribute?: string;
-  insertInstant?: number;
-  lambdaConfiguration?: LambdaConfiguration;
-  name?: string;
-  readTimeout?: number;
-  requestedAttributes?: Array<string>;
-  retrieveUserUri?: string;
-  sslCertificateKeyId?: UUID;
-  systemAccountDn?: string;
-  systemAccountPassword?: string;
-  type?: AuthenticatorType;
-}
-
-// - Why does this implement _InternalJSONColumn, and why does this use @InternalJSONColumn?, does this have it's own table with a data column?
-export interface AuthenticatorPolicy {
-  authenticatorId?: UUID;
-  data?: Record<string, any>;
-  executionTrigger?: ExecutionTrigger;
-  migrationStrategy?: MigrationStrategy;
-  sequence?: number;
-}
-
-/**
- * @author Trevor Smith
- */
-export interface AuthenticatorRequest {
-  authenticator?: Authenticator;
-}
-
-/**
- * @author Trevor Smith
- */
-export interface AuthenticatorResponse {
-  authenticator?: Authenticator;
-  authenticators?: Array<Authenticator>;
-}
-
-/**
- * The types of authenticators.
- *
- * @author Trevor Smith
- */
-export enum AuthenticatorType {
-  ldap,
-  generic,
-  fusionAuth
-}
-
-/**
  * Base-class for all FusionAuth events.
  *
  * @author Brian Pontarelli
@@ -3661,6 +3597,72 @@ export enum ClientAuthenticationMethod {
   none,
   client_secret_basic,
   client_secret_post
+}
+
+/**
+ * Models an external authenticator.
+ *
+ * @author Trevor Smith
+ */
+export interface Connector {
+  authenticationUri?: string;
+  baseStructure?: string;
+  connectTimeout?: number;
+  data?: Record<string, any>;
+  debug?: boolean;
+  emailAttribute?: string;
+  headers?: HTTPHeaders;
+  httpAuthenticationPassword?: string;
+  httpAuthenticationUsername?: string;
+  id?: UUID;
+  identifyingAttribute?: string;
+  insertInstant?: number;
+  lambdaConfiguration?: LambdaConfiguration;
+  name?: string;
+  readTimeout?: number;
+  requestedAttributes?: Array<string>;
+  retrieveUserUri?: string;
+  sslCertificateKeyId?: UUID;
+  systemAccountDn?: string;
+  systemAccountPassword?: string;
+  type?: ConnectorType;
+}
+
+/**
+ * @author Trevor Smith
+ */
+export interface ConnectorPolicy {
+  connectorId?: UUID;
+  data?: Record<string, any>;
+  executionTrigger?: ExecutionTrigger;
+  migrationStrategy?: MigrationStrategy;
+  sequence?: number;
+}
+
+/**
+ * @author Trevor Smith
+ */
+export interface ConnectorRequest {
+  connector?: Connector;
+}
+
+/**
+ * @author Trevor Smith
+ */
+export interface ConnectorResponse {
+  connector?: Connector;
+  connectors?: Array<Connector>;
+}
+
+/**
+ * The types of connectors.
+ *
+ * @author Trevor Smith
+ */
+export enum ConnectorType {
+  FusionAuth,
+  Generic,
+  LDAP
 }
 
 /**
@@ -4048,11 +4050,15 @@ export enum EventType {
   Test = "test"
 }
 
-/**
- * @author Trevor Smith
- */
-export enum ExecutionTrigger {
-  always
+// TODO : Authenticators : Is this a trigger or just a policy?
+export interface ExecutionTrigger {
+  filterDomains?: Array<string>;
+  type?: ExecutionTriggerType;
+}
+
+export enum ExecutionTriggerType {
+  Always,
+  FilterByDomain
 }
 
 /**
@@ -4970,9 +4976,9 @@ export interface MetaData {
  * @author Trevor Smith
  */
 export enum MigrationStrategy {
-  createShellUser,
-  synchronizeUser,
-  migrateIdentity
+  CreateShellUser,
+  SynchronizeUser,
+  MigrateIdentity
 }
 
 /**
@@ -5637,8 +5643,8 @@ export interface Templates {
  * @author Daniel DeGroff
  */
 export interface Tenant {
-  authenticatorPolicies?: Array<AuthenticatorPolicy>;
   configured?: boolean;
+  connectorPolicies?: Array<ConnectorPolicy>;
   data?: Record<string, any>;
   emailConfiguration?: EmailConfiguration;
   eventConfiguration?: EventConfiguration;
@@ -5870,9 +5876,9 @@ export interface UIConfiguration {
  */
 export interface User extends SecureIdentity {
   active?: boolean;
-  authenticatorId?: UUID;
   birthDate?: string;
   cleanSpeakId?: UUID;
+  connectorId?: UUID;
   data?: Record<string, any>;
   email?: string;
   expiry?: number;
