@@ -3605,7 +3605,7 @@ export enum ClientAuthenticationMethod {
  * @author Trevor Smith
  */
 export interface Connector {
-  authenticationUri?: string;
+  authenticationURL?: string;
   baseStructure?: string;
   connectTimeout?: number;
   data?: Record<string, any>;
@@ -3621,7 +3621,7 @@ export interface Connector {
   name?: string;
   readTimeout?: number;
   requestedAttributes?: Array<string>;
-  retrieveUserUri?: string;
+  retrieveUserURL?: string;
   sslCertificateKeyId?: UUID;
   systemAccountDn?: string;
   systemAccountPassword?: string;
