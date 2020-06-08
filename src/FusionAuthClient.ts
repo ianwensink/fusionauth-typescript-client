@@ -201,6 +201,22 @@ export class FusionAuthClient {
   }
 
   /**
+   * Creates a connector.  You can optionally specify an Id for the connector, if not provided one will be generated.
+   *
+   * @param {UUID} connectorId (Optional) The Id for the connector. If not provided a secure random UUID will be generated.
+   * @param {ConnectorRequest} request The request object that contains all of the information used to create the connector.
+   * @returns {Promise<ClientResponse<ConnectorResponse>>}
+   */
+  createConnector(connectorId: UUID, request: ConnectorRequest): Promise<ClientResponse<ConnectorResponse>> {
+    return this.start<ConnectorResponse, Errors>()
+        .withUri('/api/connector')
+        .withUriSegment(connectorId)
+        .withJSONBody(request)
+        .withMethod("POST")
+        .go();
+  }
+
+  /**
    * Creates a user consent type. You can optionally specify an Id for the consent type, if not provided one will be generated.
    *
    * @param {UUID} consentId (Optional) The Id for the consent. If not provided a secure random UUID will be generated.
@@ -1666,6 +1682,18 @@ export class FusionAuthClient {
     return this.start<AuditLogResponse, Errors>()
         .withUri('/api/system/audit-log')
         .withUriSegment(auditLogId)
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
+   * Retrieves all of the connectors.
+   *
+   * @returns {Promise<ClientResponse<ConnectorResponse>>}
+   */
+  retrieveConnectors(): Promise<ClientResponse<ConnectorResponse>> {
+    return this.start<ConnectorResponse, void>()
+        .withUri('/api/connector')
         .withMethod("GET")
         .go();
   }
@@ -4063,11 +4091,7 @@ export interface ExternalAuthenticationRequest {
   password?: string;
 }
 
-/**
- * Models an external connector.
- *
- * @author Trevor Smith
- */
+// TODO : Authenticators : This additional layer seems odd to me. THis 'attribute' of a connector is probably better suited to be an interface.
 export interface ExternalConnector extends BaseConnector {
   connectTimeout?: number;
   debug?: boolean;
@@ -4800,11 +4824,7 @@ export enum LambdaType {
   LdapReconcile
 }
 
-/**
- * Models an LDAP connector.
- *
- * @author Trevor Smith
- */
+// TODO : Authenticators : Naming : LDAPConnector
 export interface LdapConnector extends ExternalConnector {
   baseStructure?: string;
   emailAttribute?: string;
