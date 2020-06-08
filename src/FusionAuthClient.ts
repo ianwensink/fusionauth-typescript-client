@@ -4091,7 +4091,11 @@ export interface ExternalAuthenticationRequest {
   password?: string;
 }
 
-// TODO : Authenticators : This additional layer seems odd to me. THis 'attribute' of a connector is probably better suited to be an interface.
+/**
+ * Models an external connector.
+ *
+ * @author Trevor Smith
+ */
 export interface ExternalConnector extends BaseConnector {
   connectTimeout?: number;
   debug?: boolean;
@@ -4824,7 +4828,11 @@ export enum LambdaType {
   LdapReconcile
 }
 
-// TODO : Authenticators : Naming : LDAPConnector
+/**
+ * Models an LDAP connector.
+ *
+ * @author Trevor Smith
+ */
 export interface LdapConnector extends ExternalConnector {
   baseStructure?: string;
   emailAttribute?: string;
