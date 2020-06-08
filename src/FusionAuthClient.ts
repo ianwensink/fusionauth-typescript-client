@@ -3448,6 +3448,17 @@ export interface AuditLogSearchResponse {
 export interface AuthenticationTokenConfiguration extends Enableable {
 }
 
+// Do not require a setter for 'type', it is defined by the concrete class and is not mutable
+export interface BaseConnector {
+  authenticationURL?: string;
+  data?: Record<string, any>;
+  id?: UUID;
+  insertInstant?: number;
+  name?: string;
+  sslCertificateKeyId?: UUID;
+  type?: ConnectorType;
+}
+
 /**
  * Base-class for all FusionAuth events.
  *
@@ -3600,35 +3611,6 @@ export enum ClientAuthenticationMethod {
 }
 
 /**
- * Models an external authenticator.
- *
- * @author Trevor Smith
- */
-export interface Connector {
-  authenticationURL?: string;
-  baseStructure?: string;
-  connectTimeout?: number;
-  data?: Record<string, any>;
-  debug?: boolean;
-  emailAttribute?: string;
-  headers?: HTTPHeaders;
-  httpAuthenticationPassword?: string;
-  httpAuthenticationUsername?: string;
-  id?: UUID;
-  identifyingAttribute?: string;
-  insertInstant?: number;
-  lambdaConfiguration?: LambdaConfiguration;
-  name?: string;
-  readTimeout?: number;
-  requestedAttributes?: Array<string>;
-  retrieveUserURL?: string;
-  sslCertificateKeyId?: UUID;
-  systemAccountDn?: string;
-  systemAccountPassword?: string;
-  type?: ConnectorType;
-}
-
-/**
  * @author Trevor Smith
  */
 export interface ConnectorPolicy {
@@ -3643,15 +3625,15 @@ export interface ConnectorPolicy {
  * @author Trevor Smith
  */
 export interface ConnectorRequest {
-  connector?: Connector;
+  connector?: BaseConnector;
 }
 
 /**
  * @author Trevor Smith
  */
 export interface ConnectorResponse {
-  connector?: Connector;
-  connectors?: Array<Connector>;
+  connector?: BaseConnector;
+  connectors?: Array<BaseConnector>;
 }
 
 /**
@@ -4082,6 +4064,17 @@ export interface ExternalAuthenticationRequest {
 }
 
 /**
+ * Models an external connector.
+ *
+ * @author Trevor Smith
+ */
+export interface ExternalConnector extends BaseConnector {
+  connectTimeout?: number;
+  debug?: boolean;
+  readTimeout?: number;
+}
+
+/**
  * @author Daniel DeGroff
  */
 export interface ExternalIdentifierConfiguration {
@@ -4254,6 +4247,26 @@ export interface ForgotPasswordRequest {
  */
 export interface ForgotPasswordResponse {
   changePasswordId?: string;
+}
+
+/**
+ * Models the FusionAuth connector.
+ *
+ * @author Trevor Smith
+ */
+export interface FusionAuthConnector extends BaseConnector {
+}
+
+/**
+ * Models a generic connector.
+ *
+ * @author Trevor Smith
+ */
+export interface GenericConnector extends ExternalConnector {
+  headers?: HTTPHeaders;
+  httpAuthenticationPassword?: string;
+  httpAuthenticationUsername?: string;
+  retrieveUserURL?: string;
 }
 
 /**
@@ -4785,6 +4798,21 @@ export enum LambdaType {
   HYPRReconcile,
   TwitterReconcile,
   LdapReconcile
+}
+
+/**
+ * Models an LDAP connector.
+ *
+ * @author Trevor Smith
+ */
+export interface LdapConnector extends ExternalConnector {
+  baseStructure?: string;
+  emailAttribute?: string;
+  identifyingAttribute?: string;
+  lambdaConfiguration?: LambdaConfiguration;
+  requestedAttributes?: Array<string>;
+  systemAccountDn?: string;
+  systemAccountPassword?: string;
 }
 
 /**
