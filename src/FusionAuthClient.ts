@@ -554,6 +554,20 @@ export class FusionAuthClient {
   }
 
   /**
+   * Deletes the connector for the given Id.
+   *
+   * @param {UUID} connectorId The Id of the connector to delete.
+   * @returns {Promise<ClientResponse<void>>}
+   */
+  deleteConnector(connectorId: UUID): Promise<ClientResponse<void>> {
+    return this.start<void, Errors>()
+        .withUri('/api/connector')
+        .withUriSegment(connectorId)
+        .withMethod("DELETE")
+        .go();
+  }
+
+  /**
    * Deletes the consent for the given Id.
    *
    * @param {UUID} consentId The Id of the consent to delete.
