@@ -1687,6 +1687,20 @@ export class FusionAuthClient {
   }
 
   /**
+   * Retrieves the connector with the given Id.
+   *
+   * @param {UUID} connectorId The Id of the connector.
+   * @returns {Promise<ClientResponse<ConnectorResponse>>}
+   */
+  retrieveConnector(connectorId: UUID): Promise<ClientResponse<ConnectorResponse>> {
+    return this.start<ConnectorResponse, void>()
+        .withUri('/api/connector')
+        .withUriSegment(connectorId)
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
    * Retrieves all of the connectors.
    *
    * @returns {Promise<ClientResponse<ConnectorResponse>>}
@@ -2870,6 +2884,22 @@ export class FusionAuthClient {
         .withUriSegment(applicationId)
         .withUriSegment("role")
         .withUriSegment(roleId)
+        .withJSONBody(request)
+        .withMethod("PUT")
+        .go();
+  }
+
+  /**
+   * Updates the connector with the given Id.
+   *
+   * @param {UUID} connectorId The Id of the connector to update.
+   * @param {ConnectorRequest} request The request object that contains all of the new connector information.
+   * @returns {Promise<ClientResponse<ConnectorResponse>>}
+   */
+  updateConnector(connectorId: UUID, request: ConnectorRequest): Promise<ClientResponse<ConnectorResponse>> {
+    return this.start<ConnectorResponse, Errors>()
+        .withUri('/api/connector')
+        .withUriSegment(connectorId)
         .withJSONBody(request)
         .withMethod("PUT")
         .go();
