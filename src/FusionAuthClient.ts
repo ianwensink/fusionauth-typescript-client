@@ -4825,7 +4825,7 @@ export enum LambdaType {
   GoogleReconcile,
   HYPRReconcile,
   TwitterReconcile,
-  LdapReconcile
+  LDAPConnectorReconcile
 }
 
 /**
