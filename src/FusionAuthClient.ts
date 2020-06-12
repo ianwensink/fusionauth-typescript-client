@@ -4877,7 +4877,7 @@ export enum LambdaType {
  *
  * @author Trevor Smith
  */
-export interface LdapConnector extends ExternalConnector {
+export interface LDAPConnector extends ExternalConnector {
   baseStructure?: string;
   emailAttribute?: string;
   identifyingAttribute?: string;
