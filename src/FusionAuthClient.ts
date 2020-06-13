@@ -5076,7 +5076,7 @@ export interface MetaData {
  * @author Trevor Smith
  */
 export enum MigrationStrategy {
-  CreateShellUser,
+  ShellUser,
   SynchronizeUser,
   MigrateIdentity
 }
