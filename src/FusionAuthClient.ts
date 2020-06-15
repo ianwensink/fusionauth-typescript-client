@@ -4883,8 +4883,15 @@ export interface LDAPConnector extends ExternalConnector {
   identifyingAttribute?: string;
   lambdaConfiguration?: LambdaConfiguration;
   requestedAttributes?: Array<string>;
+  securityMethod?: LDAPSecurityMethod;
   systemAccountDn?: string;
   systemAccountPassword?: string;
+}
+
+export enum LDAPSecurityMethod {
+  None,
+  LDAPS,
+  StartTLS
 }
 
 /**
