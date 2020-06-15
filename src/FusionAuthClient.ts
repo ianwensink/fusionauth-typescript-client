@@ -3522,12 +3522,10 @@ export interface AuthenticationTokenConfiguration extends Enableable {
 
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
 export interface BaseConnector {
-  authenticationURL?: string;
   data?: Record<string, any>;
   id?: UUID;
   insertInstant?: number;
   name?: string;
-  sslCertificateKeyId?: UUID;
   type?: ConnectorType;
 }
 
@@ -4136,14 +4134,11 @@ export interface ExternalAuthenticationRequest {
 }
 
 /**
- * Models an external connector.
+ * Interface for all external connectors.
  *
  * @author Trevor Smith
  */
-export interface ExternalConnector extends BaseConnector {
-  connectTimeout?: number;
-  debug?: boolean;
-  readTimeout?: number;
+export interface ExternalConnector {
 }
 
 /**
@@ -4334,11 +4329,16 @@ export interface FusionAuthConnector extends BaseConnector {
  *
  * @author Trevor Smith
  */
-export interface GenericConnector extends ExternalConnector {
+export interface GenericConnector extends BaseConnector {
+  authenticationURL?: string;
+  connectTimeout?: number;
+  debug?: boolean;
   headers?: HTTPHeaders;
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
+  readTimeout?: number;
   retrieveUserURL?: string;
+  sslCertificateKeyId?: UUID;
 }
 
 /**
@@ -4877,11 +4877,15 @@ export enum LambdaType {
  *
  * @author Trevor Smith
  */
-export interface LDAPConnector extends ExternalConnector {
+export interface LDAPConnector extends BaseConnector {
+  authenticationURL?: string;
   baseStructure?: string;
+  connectTimeout?: number;
+  debug?: boolean;
   emailAttribute?: string;
   identifyingAttribute?: string;
   lambdaConfiguration?: LambdaConfiguration;
+  readTimeout?: number;
   requestedAttributes?: Array<string>;
   securityMethod?: LDAPSecurityMethod;
   systemAccountDn?: string;
