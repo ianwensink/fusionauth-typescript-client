@@ -1241,6 +1241,22 @@ export class FusionAuthClient {
   }
 
   /**
+   * Updates, via PATCH, the connector with the given Id.
+   *
+   * @param {UUID} connectorId The Id of the connector to update.
+   * @param {ConnectorRequest} request The request that contains just the new connector information.
+   * @returns {Promise<ClientResponse<ConnectorResponse>>}
+   */
+  patchConnector(connectorId: UUID, request: ConnectorRequest): Promise<ClientResponse<ConnectorResponse>> {
+    return this.start<ConnectorResponse, Errors>()
+        .withUri('/api/connector')
+        .withUriSegment(connectorId)
+        .withJSONBody(request)
+        .withMethod("PATCH")
+        .go();
+  }
+
+  /**
    * Updates, via PATCH, the consent with the given Id.
    *
    * @param {UUID} consentId The Id of the consent to update.
