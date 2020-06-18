@@ -4895,7 +4895,7 @@ export interface LDAPConnector extends BaseConnector {
   readTimeout?: number;
   requestedAttributes?: Array<string>;
   securityMethod?: LDAPSecurityMethod;
-  systemAccountDn?: string;
+  systemAccountDN?: string;
   systemAccountPassword?: string;
 }
 
