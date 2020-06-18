@@ -3539,6 +3539,7 @@ export interface AuthenticationTokenConfiguration extends Enableable {
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
 export interface BaseConnector {
   data?: Record<string, any>;
+  debug?: boolean;
   id?: UUID;
   insertInstant?: number;
   name?: string;
@@ -3723,7 +3724,7 @@ export interface ConnectorResponse {
 }
 
 /**
- * The types of connectors.
+ * The types of connectors. This enum is stored as an ordinal on the <code>identities</code> table, order must be maintained.
  *
  * @author Trevor Smith
  */
@@ -4150,14 +4151,6 @@ export interface ExternalAuthenticationRequest {
 }
 
 /**
- * Interface for all external connectors.
- *
- * @author Trevor Smith
- */
-export interface ExternalConnector {
-}
-
-/**
  * @author Daniel DeGroff
  */
 export interface ExternalIdentifierConfiguration {
@@ -4348,7 +4341,6 @@ export interface FusionAuthConnector extends BaseConnector {
 export interface GenericConnector extends BaseConnector {
   authenticationURL?: string;
   connectTimeout?: number;
-  debug?: boolean;
   headers?: HTTPHeaders;
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
@@ -4897,7 +4889,6 @@ export interface LDAPConnector extends BaseConnector {
   authenticationURL?: string;
   baseStructure?: string;
   connectTimeout?: number;
-  debug?: boolean;
   emailAttribute?: string;
   identifyingAttribute?: string;
   lambdaConfiguration?: LambdaConfiguration;
