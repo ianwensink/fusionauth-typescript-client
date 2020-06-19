@@ -3700,21 +3700,11 @@ export enum ClientAuthenticationMethod {
 /**
  * @author Trevor Smith
  */
-export interface ConnectorIdentityCount {
-  connectorId?: UUID;
-  count?: number;
-  tenantId?: UUID;
-}
-
-/**
- * @author Trevor Smith
- */
 export interface ConnectorPolicy {
   connectorId?: UUID;
   data?: Record<string, any>;
   executionTrigger?: ExecutionTrigger;
   migrationStrategy?: MigrationStrategy;
-  sequence?: number;
 }
 
 /**
