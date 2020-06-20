@@ -4118,7 +4118,9 @@ export enum EventType {
   Test = "test"
 }
 
-// TODO : Authenticators : Is this a trigger or just a policy?
+/**
+ * @author Trevor Smith
+ */
 export interface ExecutionTrigger {
   filterDomains?: Array<string>;
   type?: ExecutionTriggerType;
@@ -4139,14 +4141,6 @@ export enum ExpiryUnit {
   WEEKS,
   MONTHS,
   YEARS
-}
-
-/**
- * @author Trevor Smith
- */
-export interface ExternalAuthenticationRequest {
-  loginId?: string;
-  password?: string;
 }
 
 /**
