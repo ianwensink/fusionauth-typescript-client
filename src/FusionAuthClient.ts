@@ -3701,10 +3701,10 @@ export enum ClientAuthenticationMethod {
  * @author Trevor Smith
  */
 export interface ConnectorPolicy {
+  action?: ConnectorUserAction;
   connectorId?: UUID;
   data?: Record<string, any>;
-  executionTrigger?: ExecutionTrigger;
-  migrationStrategy?: MigrationStrategy;
+  domains?: Array<string>;
 }
 
 /**
@@ -3731,6 +3731,15 @@ export enum ConnectorType {
   FusionAuth,
   Generic,
   LDAP
+}
+
+/**
+ * @author Trevor Smith
+ */
+export enum ConnectorUserAction {
+  Shadow,
+  Synchronize,
+  Migrate
 }
 
 /**
@@ -4116,19 +4125,6 @@ export enum EventType {
   UserEmailVerified = "user.email.verified",
   UserPasswordBreach = "user.password.breach",
   Test = "test"
-}
-
-/**
- * @author Trevor Smith
- */
-export interface ExecutionTrigger {
-  filterDomains?: Array<string>;
-  type?: ExecutionTriggerType;
-}
-
-export enum ExecutionTriggerType {
-  Always,
-  FilterByDomain
 }
 
 /**
@@ -5081,15 +5077,6 @@ export interface MemberResponse {
 export interface MetaData {
   device?: DeviceInfo;
   scopes?: Array<string>;
-}
-
-/**
- * @author Trevor Smith
- */
-export enum MigrationStrategy {
-  ShellUser,
-  SynchronizeUser,
-  MigrateIdentity
 }
 
 /**
