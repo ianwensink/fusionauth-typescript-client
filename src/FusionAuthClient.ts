@@ -6326,6 +6326,7 @@ export interface UserLoginFailedEvent extends BaseEvent {
 export interface UserLoginSuccessEvent extends BaseEvent {
   applicationId?: UUID;
   authenticationType?: string;
+  connectorId?: UUID;
   identityProviderId?: UUID;
   identityProviderName?: string;
   user?: User;
