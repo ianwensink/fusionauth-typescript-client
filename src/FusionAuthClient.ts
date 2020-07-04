@@ -3348,6 +3348,9 @@ export enum Algorithm {
   HS256 = "HmacSHA256",
   HS384 = "HmacSHA384",
   HS512 = "HmacSHA512",
+  PS256 = "SHA-256",
+  PS384 = "SHA-384",
+  PS512 = "SHA-512",
   RS256 = "SHA256withRSA",
   RS384 = "SHA384withRSA",
   RS512 = "SHA512withRSA",
@@ -4312,6 +4315,120 @@ export interface ForgotPasswordRequest {
  */
 export interface ForgotPasswordResponse {
   changePasswordId?: string;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface Form {
+  data?: Record<string, any>;
+  id?: UUID;
+  insertInstant?: number;
+  name?: string;
+  steps?: Array<UUID>;
+  type?: FormType;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum FormControl {
+  Checkbox,
+  Number,
+  Password,
+  Radio,
+  Select,
+  TextArea,
+  Text
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum FormDataType {
+  Boolean,
+  Consent,
+  Date,
+  Email,
+  Number,
+  String,
+  TermsAndConditions
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface FormField {
+  admin?: Array<FormFieldAdminPolicy>;
+  confirm?: boolean;
+  control?: FormControl;
+  data?: Record<string, any>;
+  description?: string;
+  id?: UUID;
+  insertInstant?: number;
+  key?: string;
+  name?: string;
+  options?: Array<string>;
+  required?: boolean;
+  type?: FormDataType;
+  validator?: FormFieldValidator;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum FormFieldAdminPolicy {
+  Edit,
+  View
+}
+
+/**
+ * Form field response.
+ *
+ * @author Brett Guy
+ */
+export interface FormFieldResponse {
+  formField?: FormField;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface FormFieldValidator extends Enableable {
+  expression?: string;
+}
+
+/**
+ * Form response.
+ *
+ * @author Daniel DeGroff
+ */
+export interface FormRequest {
+  form?: Form;
+}
+
+/**
+ * Form response.
+ *
+ * @author Daniel DeGroff
+ */
+export interface FormResponse {
+  form?: Form;
+  forms?: Array<Form>;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export interface FormStep {
+  fields?: Array<FormField>;
+}
+
+/**
+ * @author Daniel DeGroff
+ */
+export enum FormType {
+  Registration
 }
 
 /**
