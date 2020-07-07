@@ -4351,8 +4351,7 @@ export enum FormDataType {
   Date,
   Email,
   Number,
-  String,
-  TermsAndConditions
+  String
 }
 
 /**
@@ -4361,6 +4360,7 @@ export enum FormDataType {
 export interface FormField {
   admin?: Array<FormFieldAdminPolicy>;
   confirm?: boolean;
+  consentId?: UUID;
   control?: FormControl;
   data?: Record<string, any>;
   description?: string;
@@ -4383,12 +4383,23 @@ export enum FormFieldAdminPolicy {
 }
 
 /**
+ * The FormField API request object.
+ *
+ * @author Brett Guy
+ */
+export interface FormFieldRequest {
+  field?: FormField;
+  fields?: Array<FormField>;
+}
+
+/**
  * Form field response.
  *
  * @author Brett Guy
  */
 export interface FormFieldResponse {
-  formField?: FormField;
+  field?: FormField;
+  fields?: Array<FormField>;
 }
 
 /**
@@ -4890,6 +4901,9 @@ export enum KeyAlgorithm {
   HS256 = "HmacSHA256",
   HS384 = "HmacSHA384",
   HS512 = "HmacSHA512",
+  PS256 = "SHA-256",
+  PS384 = "SHA-384",
+  PS512 = "SHA-512",
   RS256 = "SHA256withRSA",
   RS384 = "SHA384withRSA",
   RS512 = "SHA512withRSA"
