@@ -266,6 +266,38 @@ export class FusionAuthClient {
   }
 
   /**
+   * Creates a form.  You can optionally specify an Id for the form, if not provided one will be generated.
+   *
+   * @param {UUID} formId (Optional) The Id for the form. If not provided a secure random UUID will be generated.
+   * @param {FormRequest} request The request object that contains all of the information used to create the form.
+   * @returns {Promise<ClientResponse<FormResponse>>}
+   */
+  createForm(formId: UUID, request: FormRequest): Promise<ClientResponse<FormResponse>> {
+    return this.start<FormResponse, Errors>()
+        .withUri('/api/form')
+        .withUriSegment(formId)
+        .withJSONBody(request)
+        .withMethod("POST")
+        .go();
+  }
+
+  /**
+   * Creates a form field.  You can optionally specify an Id for the form, if not provided one will be generated.
+   *
+   * @param {UUID} fieldId (Optional) The Id for the form field. If not provided a secure random UUID will be generated.
+   * @param {FormFieldRequest} request The request object that contains all of the information used to create the form field.
+   * @returns {Promise<ClientResponse<FormFieldResponse>>}
+   */
+  createFormField(fieldId: UUID, request: FormFieldRequest): Promise<ClientResponse<FormFieldResponse>> {
+    return this.start<FormFieldResponse, Errors>()
+        .withUri('/api/form/field')
+        .withUriSegment(fieldId)
+        .withJSONBody(request)
+        .withMethod("POST")
+        .go();
+  }
+
+  /**
    * Creates a group. You can optionally specify an Id for the group, if not provided one will be generated.
    *
    * @param {UUID} groupId (Optional) The Id for the group. If not provided a secure random UUID will be generated.
@@ -591,6 +623,34 @@ export class FusionAuthClient {
     return this.start<void, Errors>()
         .withUri('/api/email/template')
         .withUriSegment(emailTemplateId)
+        .withMethod("DELETE")
+        .go();
+  }
+
+  /**
+   * Deletes the form for the given Id.
+   *
+   * @param {UUID} formId The Id of the form to delete.
+   * @returns {Promise<ClientResponse<void>>}
+   */
+  deleteForm(formId: UUID): Promise<ClientResponse<void>> {
+    return this.start<void, Errors>()
+        .withUri('/api/form')
+        .withUriSegment(formId)
+        .withMethod("DELETE")
+        .go();
+  }
+
+  /**
+   * Deletes the form field for the given Id.
+   *
+   * @param {UUID} fieldId The Id of the form field to delete.
+   * @returns {Promise<ClientResponse<void>>}
+   */
+  deleteFormField(fieldId: UUID): Promise<ClientResponse<void>> {
+    return this.start<void, Errors>()
+        .withUri('/api/form/field')
+        .withUriSegment(fieldId)
         .withMethod("DELETE")
         .go();
   }
@@ -1872,6 +1932,58 @@ export class FusionAuthClient {
   }
 
   /**
+   * Retrieves the form with the given Id.
+   *
+   * @param {UUID} formId The Id of the form.
+   * @returns {Promise<ClientResponse<FormResponse>>}
+   */
+  retrieveForm(formId: UUID): Promise<ClientResponse<FormResponse>> {
+    return this.start<FormResponse, void>()
+        .withUri('/api/form')
+        .withUriSegment(formId)
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
+   * Retrieves the form field with the given Id.
+   *
+   * @param {UUID} fieldId The Id of the form field.
+   * @returns {Promise<ClientResponse<FormFieldResponse>>}
+   */
+  retrieveFormField(fieldId: UUID): Promise<ClientResponse<FormFieldResponse>> {
+    return this.start<FormFieldResponse, void>()
+        .withUri('/api/form/field')
+        .withUriSegment(fieldId)
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
+   * Retrieves all of the forms fields
+   *
+   * @returns {Promise<ClientResponse<FormFieldResponse>>}
+   */
+  retrieveFormFields(): Promise<ClientResponse<FormFieldResponse>> {
+    return this.start<FormFieldResponse, void>()
+        .withUri('/api/form/field')
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
+   * Retrieves all of the forms.
+   *
+   * @returns {Promise<ClientResponse<FormResponse>>}
+   */
+  retrieveForms(): Promise<ClientResponse<FormResponse>> {
+    return this.start<FormResponse, void>()
+        .withUri('/api/form')
+        .withMethod("GET")
+        .go();
+  }
+
+  /**
    * Retrieves the group for the given Id.
    *
    * @param {UUID} groupId The Id of the group.
@@ -2962,6 +3074,38 @@ export class FusionAuthClient {
     return this.start<EmailTemplateResponse, Errors>()
         .withUri('/api/email/template')
         .withUriSegment(emailTemplateId)
+        .withJSONBody(request)
+        .withMethod("PUT")
+        .go();
+  }
+
+  /**
+   * Updates the form with the given Id.
+   *
+   * @param {UUID} formId The Id of the form to update.
+   * @param {FormRequest} request The request object that contains all of the new form information.
+   * @returns {Promise<ClientResponse<FormResponse>>}
+   */
+  updateForm(formId: UUID, request: FormRequest): Promise<ClientResponse<FormResponse>> {
+    return this.start<FormResponse, Errors>()
+        .withUri('/api/form')
+        .withUriSegment(formId)
+        .withJSONBody(request)
+        .withMethod("PUT")
+        .go();
+  }
+
+  /**
+   * Updates the form field with the given Id.
+   *
+   * @param {UUID} fieldId The Id of the form field to update.
+   * @param {FormFieldRequest} request The request object that contains all of the new form field information.
+   * @returns {Promise<ClientResponse<FormFieldResponse>>}
+   */
+  updateFormField(fieldId: UUID, request: FormFieldRequest): Promise<ClientResponse<FormFieldResponse>> {
+    return this.start<FormFieldResponse, Errors>()
+        .withUri('/api/form/field')
+        .withUriSegment(fieldId)
         .withJSONBody(request)
         .withMethod("PUT")
         .go();
