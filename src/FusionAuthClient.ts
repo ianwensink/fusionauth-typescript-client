@@ -4469,7 +4469,7 @@ export interface Form {
   id?: UUID;
   insertInstant?: number;
   name?: string;
-  steps?: Array<UUID>;
+  steps?: Array<FormStep>;
   type?: FormType;
 }
 
@@ -4576,7 +4576,7 @@ export interface FormResponse {
  * @author Daniel DeGroff
  */
 export interface FormStep {
-  fields?: Array<FormField>;
+  fields?: Array<UUID>;
 }
 
 /**
