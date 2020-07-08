@@ -3966,6 +3966,10 @@ export interface Count {
   interval?: number;
 }
 
+export interface CustomRegistration extends Enableable {
+  formId?: UUID;
+}
+
 /**
  * Response for the daily active user report.
  *
@@ -5730,6 +5734,7 @@ export enum RefreshTokenUsagePolicy {
 export interface RegistrationConfiguration extends Enableable {
   birthDate?: Requirable;
   confirmPassword?: boolean;
+  custom?: CustomRegistration;
   firstName?: Requirable;
   fullName?: Requirable;
   lastName?: Requirable;
