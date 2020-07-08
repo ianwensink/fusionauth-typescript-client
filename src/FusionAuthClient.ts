@@ -4481,25 +4481,25 @@ export interface Form {
  * @author Daniel DeGroff
  */
 export enum FormControl {
-  Checkbox,
-  Number,
-  Password,
-  Radio,
-  Select,
-  TextArea,
-  Text
+  checkbox,
+  number,
+  password,
+  radio,
+  select,
+  textarea,
+  text
 }
 
 /**
  * @author Daniel DeGroff
  */
 export enum FormDataType {
-  Boolean,
-  Consent,
-  Date,
-  Email,
-  Number,
-  String
+  bool,
+  consent,
+  date,
+  email,
+  number,
+  string
 }
 
 /**
@@ -5734,13 +5734,14 @@ export enum RefreshTokenUsagePolicy {
 export interface RegistrationConfiguration extends Enableable {
   birthDate?: Requirable;
   confirmPassword?: boolean;
-  custom?: CustomRegistration;
   firstName?: Requirable;
+  formId?: UUID;
   fullName?: Requirable;
   lastName?: Requirable;
   loginIdType?: LoginIdType;
   middleName?: Requirable;
   mobilePhone?: Requirable;
+  type?: RegistrationType;
 }
 
 /**
@@ -5777,6 +5778,11 @@ export interface RegistrationResponse {
   registration?: UserRegistration;
   token?: string;
   user?: User;
+}
+
+export enum RegistrationType {
+  basic,
+  advanced
 }
 
 /**
