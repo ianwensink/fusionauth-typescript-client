@@ -4587,7 +4587,7 @@ export interface FormStep {
  * @author Daniel DeGroff
  */
 export enum FormType {
-  Registration
+  registration
 }
 
 /**
