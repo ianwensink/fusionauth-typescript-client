@@ -3532,8 +3532,10 @@ export interface Application {
   cleanSpeakConfiguration?: CleanSpeakConfiguration;
   data?: Record<string, any>;
   id?: UUID;
+  insertInstant?: number;
   jwtConfiguration?: JWTConfiguration;
   lambdaConfiguration?: LambdaConfiguration;
+  lastUpdateInstant?: number;
   loginConfiguration?: LoginConfiguration;
   name?: string;
   oauthConfiguration?: OAuth2Configuration;
@@ -3594,8 +3596,10 @@ export interface ApplicationResponse {
 export interface ApplicationRole {
   description?: string;
   id?: UUID;
+  insertInstant?: number;
   isDefault?: boolean;
   isSuperRole?: boolean;
+  lastUpdateInstant?: number;
   name?: string;
 }
 
@@ -3689,6 +3693,7 @@ export interface BaseConnector {
   debug?: boolean;
   id?: UUID;
   insertInstant?: number;
+  lastUpdateInstant?: number;
   name?: string;
   type?: ConnectorType;
 }
@@ -3718,7 +3723,9 @@ export interface BaseIdentityProvider<D extends BaseIdentityProviderApplicationC
   data?: Record<string, any>;
   debug?: boolean;
   id?: UUID;
+  insertInstant?: number;
   lambdaConfiguration?: LambdaConfiguration;
+  lastUpdateInstant?: number;
   name?: string;
   type?: IdentityProviderType;
 }
@@ -3901,6 +3908,8 @@ export interface Consent {
   defaultMinimumAgeForSelfConsent?: number;
   emailPlus?: EmailPlus;
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   multipleValuesAllowed?: boolean;
   name?: string;
   values?: Array<string>;
@@ -4106,6 +4115,8 @@ export interface EmailTemplate {
   defaultTextTemplate?: string;
   fromEmail?: string;
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   localizedFromNames?: LocalizedStrings;
   localizedHtmlTemplates?: LocalizedStrings;
   localizedSubjects?: LocalizedStrings;
@@ -4377,6 +4388,8 @@ export interface FailedAuthenticationConfiguration {
  */
 export interface Family {
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   members?: Array<FamilyMember>;
 }
 
@@ -4472,6 +4485,7 @@ export interface Form {
   data?: Record<string, any>;
   id?: UUID;
   insertInstant?: number;
+  lastUpdateInstant?: number;
   name?: string;
   steps?: Array<FormStep>;
   type?: FormType;
@@ -4515,6 +4529,7 @@ export interface FormField {
   id?: UUID;
   insertInstant?: number;
   key?: string;
+  lastUpdateInstant?: number;
   name?: string;
   options?: Array<string>;
   required?: boolean;
@@ -4661,6 +4676,8 @@ export enum GrantType {
 export interface Group {
   data?: Record<string, any>;
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   name?: string;
   roles?: Record<UUID, Array<ApplicationRole>>;
   tenantId?: UUID;
@@ -5034,6 +5051,7 @@ export interface Key {
   insertInstant?: number;
   issuer?: string;
   kid?: string;
+  lastUpdateInstant?: number;
   length?: number;
   name?: string;
   privateKey?: string;
@@ -5092,6 +5110,7 @@ export interface Lambda extends Enableable {
   debug?: boolean;
   id?: UUID;
   insertInstant?: number;
+  lastUpdateInstant?: number;
   name?: string;
   type?: LambdaType;
 }
@@ -5967,6 +5986,8 @@ export interface SystemConfiguration {
   corsConfiguration?: CORSConfiguration;
   data?: Record<string, any>;
   eventLogConfiguration?: EventLogConfiguration;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   loginRecordConfiguration?: LoginRecordConfiguration;
   reportTimezone?: string;
   uiConfiguration?: UIConfiguration;
@@ -6037,8 +6058,10 @@ export interface Tenant {
   familyConfiguration?: FamilyConfiguration;
   httpSessionMaxInactiveInterval?: number;
   id?: UUID;
+  insertInstant?: number;
   issuer?: string;
   jwtConfiguration?: JWTConfiguration;
+  lastUpdateInstant?: number;
   logoutURL?: string;
   maximumPasswordAge?: MaximumPasswordAge;
   minimumPasswordAge?: MinimumPasswordAge;
@@ -6272,6 +6295,7 @@ export interface User extends SecureIdentity {
   insertInstant?: number;
   lastLoginInstant?: number;
   lastName?: string;
+  lastUpdateInstant?: number;
   memberships?: Array<GroupMember>;
   middleName?: string;
   mobilePhone?: string;
@@ -6298,6 +6322,8 @@ export interface UserAction {
   endEmailTemplateId?: UUID;
   id?: UUID;
   includeEmailInEventJSON?: boolean;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   localizedNames?: LocalizedStrings;
   modifyEmailTemplateId?: UUID;
   name?: string;
@@ -6347,12 +6373,12 @@ export interface UserActionLog {
   actionerUserId?: UUID;
   applicationIds?: Array<UUID>;
   comment?: string;
-  createInstant?: number;
   emailUserOnEnd?: boolean;
   endEventSent?: boolean;
   expiry?: number;
   history?: LogHistory;
   id?: UUID;
+  insertInstant?: number;
   localizedName?: string;
   localizedOption?: string;
   localizedReason?: string;
@@ -6394,6 +6420,8 @@ export enum UserActionPhase {
 export interface UserActionReason {
   code?: string;
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   localizedTexts?: LocalizedStrings;
   text?: string;
 }
@@ -6453,8 +6481,8 @@ export interface UserBulkCreateEvent extends BaseEvent {
 export interface UserComment {
   comment?: string;
   commenterId?: UUID;
-  createInstant?: number;
   id?: UUID;
+  insertInstant?: number;
   userId?: UUID;
 }
 
@@ -6640,6 +6668,7 @@ export interface UserRegistration {
   id?: UUID;
   insertInstant?: number;
   lastLoginInstant?: number;
+  lastUpdateInstant?: number;
   preferredLanguages?: Array<string>;
   roles?: Array<string>;
   timezone?: string;
@@ -6782,6 +6811,8 @@ export interface Webhook {
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
   id?: UUID;
+  insertInstant?: number;
+  lastUpdateInstant?: number;
   readTimeout?: number;
   sslCertificate?: string;
   url?: string;
