@@ -4425,6 +4425,7 @@ export interface FamilyEmailRequest {
 export interface FamilyMember {
   data?: Record<string, any>;
   insertInstant?: number;
+  lastUpdateInstant?: number;
   owner?: boolean;
   role?: FamilyRole;
   userId?: UUID;
