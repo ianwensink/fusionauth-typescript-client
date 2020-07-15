@@ -3492,9 +3492,6 @@ export enum Algorithm {
   HS256 = "HmacSHA256",
   HS384 = "HmacSHA384",
   HS512 = "HmacSHA512",
-  PS256 = "SHA-256",
-  PS384 = "SHA-384",
-  PS512 = "SHA-512",
   RS256 = "SHA256withRSA",
   RS384 = "SHA384withRSA",
   RS512 = "SHA512withRSA",
@@ -5932,14 +5929,21 @@ export enum SecureGeneratorType {
 export interface SecureIdentity {
   breachedPasswordLastCheckedInstant?: number;
   breachedPasswordStatus?: BreachedPasswordStatus;
+  connectorId?: UUID;
   encryptionScheme?: string;
   factor?: number;
   id?: UUID;
+  lastLoginInstant?: number;
   password?: string;
   passwordChangeReason?: ChangePasswordReason;
   passwordChangeRequired?: boolean;
   passwordLastUpdateInstant?: number;
   salt?: string;
+  twoFactorDelivery?: TwoFactorDelivery;
+  twoFactorEnabled?: boolean;
+  twoFactorSecret?: string;
+  username?: string;
+  usernameStatus?: ContentStatus;
   verified?: boolean;
 }
 
@@ -6286,7 +6290,6 @@ export interface User extends SecureIdentity {
   active?: boolean;
   birthDate?: string;
   cleanSpeakId?: UUID;
-  connectorId?: UUID;
   data?: Record<string, any>;
   email?: string;
   expiry?: number;
@@ -6294,7 +6297,6 @@ export interface User extends SecureIdentity {
   fullName?: string;
   imageUrl?: string;
   insertInstant?: number;
-  lastLoginInstant?: number;
   lastName?: string;
   lastUpdateInstant?: number;
   memberships?: Array<GroupMember>;
@@ -6305,11 +6307,6 @@ export interface User extends SecureIdentity {
   registrations?: Array<UserRegistration>;
   tenantId?: UUID;
   timezone?: string;
-  twoFactorDelivery?: TwoFactorDelivery;
-  twoFactorEnabled?: boolean;
-  twoFactorSecret?: string;
-  username?: string;
-  usernameStatus?: ContentStatus;
 }
 
 /**
