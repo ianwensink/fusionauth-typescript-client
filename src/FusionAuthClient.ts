@@ -5173,9 +5173,9 @@ export interface LDAPConnectorConfiguration extends BaseConnectorConfiguration {
   authenticationURL?: string;
   baseStructure?: string;
   connectTimeout?: number;
-  loginIdAttribute?: string;
   identifyingAttribute?: string;
   lambdaConfiguration?: LambdaConfiguration;
+  loginIdAttribute?: string;
   readTimeout?: number;
   requestedAttributes?: Array<string>;
   securityMethod?: LDAPSecurityMethod;
