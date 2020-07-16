@@ -3688,7 +3688,7 @@ export interface AuthenticationTokenConfiguration extends Enableable {
 }
 
 // Do not require a setter for 'type', it is defined by the concrete class and is not mutable
-export interface BaseConnector {
+export interface BaseConnectorConfiguration {
   data?: Record<string, any>;
   debug?: boolean;
   id?: UUID;
@@ -3865,15 +3865,15 @@ export interface ConnectorPolicy {
  * @author Trevor Smith
  */
 export interface ConnectorRequest {
-  connector?: BaseConnector;
+  connector?: BaseConnectorConfiguration;
 }
 
 /**
  * @author Trevor Smith
  */
 export interface ConnectorResponse {
-  connector?: BaseConnector;
-  connectors?: Array<BaseConnector>;
+  connector?: BaseConnectorConfiguration;
+  connectors?: Array<BaseConnectorConfiguration>;
 }
 
 /**
@@ -4521,7 +4521,6 @@ export enum FormDataType {
  * @author Daniel DeGroff
  */
 export interface FormField {
-  admin?: Array<FormFieldAdminPolicy>;
   confirm?: boolean;
   consentId?: UUID;
   control?: FormControl;
@@ -4611,7 +4610,7 @@ export enum FormType {
  *
  * @author Trevor Smith
  */
-export interface FusionAuthConnector extends BaseConnector {
+export interface FusionAuthConnectorConfiguration extends BaseConnectorConfiguration {
 }
 
 /**
@@ -4619,7 +4618,7 @@ export interface FusionAuthConnector extends BaseConnector {
  *
  * @author Trevor Smith
  */
-export interface GenericConnector extends BaseConnector {
+export interface GenericConnectorConfiguration extends BaseConnectorConfiguration {
   authenticationURL?: string;
   connectTimeout?: number;
   headers?: HTTPHeaders;
@@ -5173,7 +5172,7 @@ export enum LambdaType {
  *
  * @author Trevor Smith
  */
-export interface LDAPConnector extends BaseConnector {
+export interface LDAPConnectorConfiguration extends BaseConnectorConfiguration {
   authenticationURL?: string;
   baseStructure?: string;
   connectTimeout?: number;
