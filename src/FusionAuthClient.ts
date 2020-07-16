@@ -5173,7 +5173,7 @@ export interface LDAPConnectorConfiguration extends BaseConnectorConfiguration {
   authenticationURL?: string;
   baseStructure?: string;
   connectTimeout?: number;
-  emailAttribute?: string;
+  loginIdAttribute?: string;
   identifyingAttribute?: string;
   lambdaConfiguration?: LambdaConfiguration;
   readTimeout?: number;
