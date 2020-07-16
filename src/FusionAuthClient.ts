@@ -5064,9 +5064,6 @@ export enum KeyAlgorithm {
   HS256 = "HmacSHA256",
   HS384 = "HmacSHA384",
   HS512 = "HmacSHA512",
-  PS256 = "SHA-256",
-  PS384 = "SHA-384",
-  PS512 = "SHA-512",
   RS256 = "SHA256withRSA",
   RS384 = "SHA384withRSA",
   RS512 = "SHA512withRSA"
