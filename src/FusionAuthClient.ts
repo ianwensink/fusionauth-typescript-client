@@ -3852,10 +3852,10 @@ export enum ClientAuthenticationMethod {
  * @author Trevor Smith
  */
 export interface ConnectorPolicy {
-  action?: ConnectorUserAction;
   connectorId?: UUID;
   data?: Record<string, any>;
   domains?: Array<string>;
+  migrate?: boolean;
 }
 
 /**
@@ -3882,15 +3882,6 @@ export enum ConnectorType {
   FusionAuth,
   Generic,
   LDAP
-}
-
-/**
- * @author Trevor Smith
- */
-export enum ConnectorUserAction {
-  Shadow,
-  Synchronize,
-  Migrate
 }
 
 /**
@@ -4622,7 +4613,6 @@ export interface GenericConnectorConfiguration extends BaseConnectorConfiguratio
   httpAuthenticationPassword?: string;
   httpAuthenticationUsername?: string;
   readTimeout?: number;
-  retrieveUserURL?: string;
   sslCertificateKeyId?: UUID;
 }
 
