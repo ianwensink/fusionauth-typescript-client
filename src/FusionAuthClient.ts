@@ -5700,6 +5700,8 @@ export interface RefreshResponse {
  */
 export interface RefreshToken {
   applicationId?: UUID;
+  data?: Record<string, any>;
+  id?: UUID;
   insertInstant?: number;
   metaData?: MetaData;
   startInstant?: number;
