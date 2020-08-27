@@ -4057,6 +4057,16 @@ export interface EmailAddress {
 }
 
 /**
+ * @author Daniel DeGroff
+ */
+export interface EmailConfiguration {
+  emailVerificationEmailTemplateId?: UUID;
+  forgotPasswordEmailTemplateId?: UUID;
+  passwordlessEmailTemplateId?: UUID;
+  setPasswordEmailTemplateId?: UUID;
+}
+
+/**
  * @author Brian Pontarelli
  */
 export interface EmailConfiguration {
@@ -4074,13 +4084,6 @@ export interface EmailConfiguration {
   verificationEmailTemplateId?: UUID;
   verifyEmail?: boolean;
   verifyEmailWhenChanged?: boolean;
-}
-
-export interface EmailConfiguration {
-  emailVerificationEmailTemplateId?: UUID;
-  forgotPasswordEmailTemplateId?: UUID;
-  passwordlessEmailTemplateId?: UUID;
-  setPasswordEmailTemplateId?: UUID;
 }
 
 export interface EmailPlus extends Enableable {
@@ -5984,7 +5987,6 @@ export interface StatusConfiguration {
  */
 export interface SystemConfiguration {
   auditLogConfiguration?: AuditLogConfiguration;
-  cookieEncryptionIV?: string;
   cookieEncryptionKey?: string;
   corsConfiguration?: CORSConfiguration;
   data?: Record<string, any>;
