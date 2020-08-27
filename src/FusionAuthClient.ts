@@ -3528,7 +3528,7 @@ export interface Application {
   authenticationTokenConfiguration?: AuthenticationTokenConfiguration;
   cleanSpeakConfiguration?: CleanSpeakConfiguration;
   data?: Record<string, any>;
-  emailConfiguration?: EmailConfiguration;
+  emailConfiguration?: ApplicationEmailConfiguration;
   id?: UUID;
   insertInstant?: number;
   jwtConfiguration?: JWTConfiguration;
@@ -3545,6 +3545,13 @@ export interface Application {
   tenantId?: UUID;
   verificationEmailTemplateId?: UUID;
   verifyRegistration?: boolean;
+}
+
+export interface ApplicationEmailConfiguration {
+  emailVerificationEmailTemplateId?: UUID;
+  forgotPasswordEmailTemplateId?: UUID;
+  passwordlessEmailTemplateId?: UUID;
+  setPasswordEmailTemplateId?: UUID;
 }
 
 /**
@@ -4054,16 +4061,6 @@ export interface Email {
 export interface EmailAddress {
   address?: string;
   display?: string;
-}
-
-/**
- * @author Daniel DeGroff
- */
-export interface EmailConfiguration {
-  emailVerificationEmailTemplateId?: UUID;
-  forgotPasswordEmailTemplateId?: UUID;
-  passwordlessEmailTemplateId?: UUID;
-  setPasswordEmailTemplateId?: UUID;
 }
 
 /**
