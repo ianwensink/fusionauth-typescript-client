@@ -3528,6 +3528,7 @@ export interface Application {
   authenticationTokenConfiguration?: AuthenticationTokenConfiguration;
   cleanSpeakConfiguration?: CleanSpeakConfiguration;
   data?: Record<string, any>;
+  emailConfiguration?: EmailConfiguration;
   id?: UUID;
   insertInstant?: number;
   jwtConfiguration?: JWTConfiguration;
@@ -4075,6 +4076,13 @@ export interface EmailConfiguration {
   verifyEmailWhenChanged?: boolean;
 }
 
+export interface EmailConfiguration {
+  emailVerificationEmailTemplateId?: UUID;
+  forgotPasswordEmailTemplateId?: UUID;
+  passwordlessEmailTemplateId?: UUID;
+  setPasswordEmailTemplateId?: UUID;
+}
+
 export interface EmailPlus extends Enableable {
   emailTemplateId?: UUID;
   maximumTimeToSendEmailInHours?: number;
@@ -4446,6 +4454,7 @@ export enum FamilyRole {
  * @author Brian Pontarelli
  */
 export interface ForgotPasswordRequest {
+  applicationId?: UUID;
   changePasswordId?: string;
   email?: string;
   loginId?: string;
@@ -5966,6 +5975,10 @@ export interface SortField {
   order?: Sort;
 }
 
+export interface StatusConfiguration {
+  requireAuthentication?: boolean;
+}
+
 /**
  * @author Brian Pontarelli
  */
@@ -5980,6 +5993,7 @@ export interface SystemConfiguration {
   lastUpdateInstant?: number;
   loginRecordConfiguration?: LoginRecordConfiguration;
   reportTimezone?: string;
+  statusConfiguration?: StatusConfiguration;
   uiConfiguration?: UIConfiguration;
 }
 
