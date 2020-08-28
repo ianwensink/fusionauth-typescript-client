@@ -5727,6 +5727,16 @@ export enum RefreshTokenExpirationPolicy {
 }
 
 /**
+ * Refresh Token Import request.
+ *
+ * @author Brett Guy
+ */
+export interface RefreshTokenImportRequest {
+  refreshTokens?: Array<RefreshToken>;
+  validateDbConstraints?: boolean;
+}
+
+/**
  * @author Daniel DeGroff
  */
 export interface RefreshTokenRevocationPolicy {
