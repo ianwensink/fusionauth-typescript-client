@@ -1121,6 +1121,22 @@ export class FusionAuthClient {
   }
 
   /**
+   * Bulk imports refresh tokens. This does some validation, but then tries to run batch inserts of refresh tokens. This reduces
+   * latency when inserting lots of refresh tokens. Therefore, the error response might contain some information about failures,
+   * but it will likely be pretty generic.
+   *
+   * @param {RefreshTokenImportRequest} request The request that contains all of the information about all of the refresh tokens to import.
+   * @returns {Promise<ClientResponse<void>>}
+   */
+  importUserRefreshTokens(request: RefreshTokenImportRequest): Promise<ClientResponse<void>> {
+    return this.start<void, Errors>()
+        .withUri('/api/user/refresh-token/import')
+        .withJSONBody(request)
+        .withMethod("POST")
+        .go();
+  }
+
+  /**
    * Bulk imports multiple users. This does some validation, but then tries to run batch inserts of users. This reduces
    * latency when inserting lots of users. Therefore, the error response might contain some information about failures,
    * but it will likely be pretty generic.
