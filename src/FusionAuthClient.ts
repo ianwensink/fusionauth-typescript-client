@@ -6001,10 +6001,6 @@ export interface SortField {
   order?: Sort;
 }
 
-export interface StatusConfiguration {
-  requireAuthentication?: boolean;
-}
-
 /**
  * @author Brian Pontarelli
  */
@@ -6018,7 +6014,6 @@ export interface SystemConfiguration {
   lastUpdateInstant?: number;
   loginRecordConfiguration?: LoginRecordConfiguration;
   reportTimezone?: string;
-  statusConfiguration?: StatusConfiguration;
   uiConfiguration?: UIConfiguration;
 }
 
